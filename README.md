@@ -53,11 +53,19 @@ cd teachpilot
 ```bash
 cd backend
 
-# 安装依赖
-pip install -r requirements.txt
+# 安装 uv (如果未安装)
+pip install uv
+
+# 创建虚拟环境并安装依赖
+uv sync
+
+# 激活虚拟环境
+.\venv\Scripts\Activate.ps1  # PowerShell
+# 或
+venv\Scripts\activate  # CMD
 
 # 配置环境变量
-cp .env.example .env
+copy .env.example .env
 # 编辑 .env 文件，填入 OPENROUTER_API_KEY
 
 # 启动服务
