@@ -85,8 +85,9 @@ async def api_status():
 
 if __name__ == "__main__":
     import uvicorn
-    print(f"🚀 TeachPilot 启动中...")
-    print(f"📖 API 文档：http://localhost:{settings.PORT}/docs")
+    print("[TeachPilot] 启动中...")
+    print(f"[TeachPilot] API 文档：http://localhost:{settings.PORT}/docs")
+    print(f"[TeachPilot] 健康检查：http://localhost:{settings.PORT}/health")
     uvicorn.run(
         "main:app",
         host=settings.HOST,
