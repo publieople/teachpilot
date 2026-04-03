@@ -17,7 +17,8 @@ opencv-python==4.9.0.80  # Video/Image processing
 pillow==10.2.0
 
 # LLM API
-dashscope==1.14.0  # 通义千问 API
+openai==1.12.0  # OpenRouter 兼容 OpenAI API
+# dashscope==1.14.0  # 通义千问 API (备用)
 
 # Utilities
 pydantic==2.5.3
