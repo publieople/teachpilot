@@ -12,7 +12,7 @@ import os
 from config import settings
 
 # 导入路由模块
-from routes import chat, rag, files, generate
+from routes import chat, rag, files, generate, modify
 
 # 创建 FastAPI 应用
 app = FastAPI(
@@ -42,6 +42,7 @@ app.include_router(chat.router)
 app.include_router(rag.router)
 app.include_router(files.router)
 app.include_router(generate.router)
+app.include_router(modify.router)
 
 
 @app.get("/")
