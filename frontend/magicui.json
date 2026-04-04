@@ -1,0 +1,14 @@
+{
+  "$schema": "https://magicui.design/schema.json",
+  "style": "default",
+  "tailwind": {
+    "config": "tailwind.config.js",
+    "css": "src/index.css"
+  },
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils",
+    "ui": "@/components/ui",
+    "magic": "@/components/magic"
+  }
+}
