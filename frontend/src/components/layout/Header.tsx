@@ -55,18 +55,18 @@ export function Header() {
 
         {/* 右侧 - 操作按钮 */}
         <div className="flex items-center gap-2 ml-auto">
-          <Button variant="ghost" size="icon" className="relative glass hover:bg-primary/10">
+          <Button variant="ghost" size="icon" className="relative hover:bg-primary/10">
             <Bell className="w-5 h-5" />
             <span className="absolute top-2 right-2 w-2 h-2 bg-accent rounded-full animate-pulse" />
           </Button>
           
           <ThemeToggle />
           
-          <Button variant="ghost" size="icon" className="glass hover:bg-primary/10">
+          <Button variant="ghost" size="icon" className="hover:bg-primary/10">
             <Settings className="w-5 h-5" />
           </Button>
           
-          <Button variant="ghost" size="icon" className="glass hover:bg-primary/10">
+          <Button variant="ghost" size="icon" className="hover:bg-primary/10">
             <User className="w-5 h-5" />
           </Button>
         </div>

@@ -79,6 +79,75 @@ code {
   border: 1px solid hsl(var(--border) / 0.5);
 }
 
+/* CSS 变量定义 */
+:root {
+  /* 浅色主题 - 专业现代 + 温暖亲和 */
+  --background: 210 40% 98%;
+  --foreground: 222 47% 11%;
+  
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+  
+  /* 主色 - 深蓝色（专业感） */
+  --primary: 221 83% 53%;
+  --primary-foreground: 210 40% 98%;
+  
+  /* 次要色 - 浅蓝灰 */
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222 47% 11%;
+  
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 16% 47%;
+  
+  /* 强调色 - 珊瑚橙（创意/活力） */
+  --accent: 14 92% 63%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 221 83% 53%;
+  --radius: 0.75rem;
+}
+
+.dark {
+  /* 深色主题 - 带氛围感 */
+  --background: 222 47% 11%;
+  --foreground: 210 40% 98%;
+  
+  --card: 222 47% 15%;
+  --card-foreground: 210 40% 98%;
+  
+  --popover: 222 47% 15%;
+  --popover-foreground: 210 40% 98%;
+  
+  /* 主色 - 亮蓝色 */
+  --primary: 217 91% 65%;
+  --primary-foreground: 222 47% 11%;
+  
+  --secondary: 217 33% 18%;
+  --secondary-foreground: 210 40% 98%;
+  
+  --muted: 217 33% 18%;
+  --muted-foreground: 215 20% 65%;
+  
+  /* 强调色 - 珊瑚橙（深色模式下更亮） */
+  --accent: 14 92% 70%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 63% 40%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --border: 217 33% 18%;
+  --input: 217 33% 18%;
+  --ring: 224 76% 65%;
+}
+
 @layer base {
   * {
     border-color: hsl(var(--border));
@@ -87,14 +156,6 @@ code {
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
-    /* 添加微妙的背景动画 */
-    animation: bg-shift 30s ease infinite;
-    background-size: 200% 200%;
-  }
-
-  @keyframes bg-shift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
   }
 
   /* 入场动画 */
@@ -135,75 +196,5 @@ code {
 
   .animate-glow {
     animation: glow 2s ease-in-out infinite;
-  }
-}
-
-  :root {
-    /* 浅色主题 - 专业现代 + 温暖亲和 */
-    --background: 210 40% 98%;
-    --foreground: 222 47% 11%;
-    
-    /* 卡片 - 带微妙渐变 */
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
-    
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    
-    /* 主色 - 深蓝色（专业感） */
-    --primary: 221 83% 53%;
-    --primary-foreground: 210 40% 98%;
-    
-    /* 次要色 - 浅蓝灰 */
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
-    
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
-    
-    /* 强调色 - 珊瑚橙（创意/活力） */
-    --accent: 14 92% 63%;
-    --accent-foreground: 0 0% 100%;
-    
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-    
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 221 83% 53%;
-    --radius: 0.75rem;
-  }
-
-  .dark {
-    /* 深色主题 - 带氛围感 */
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
-    
-    --card: 222 47% 15%;
-    --card-foreground: 210 40% 98%;
-    
-    --popover: 222 47% 15%;
-    --popover-foreground: 210 40% 98%;
-    
-    /* 主色 - 亮蓝色 */
-    --primary: 217 91% 65%;
-    --primary-foreground: 222 47% 11%;
-    
-    --secondary: 217 33% 18%;
-    --secondary-foreground: 210 40% 98%;
-    
-    --muted: 217 33% 18%;
-    --muted-foreground: 215 20% 65%;
-    
-    /* 强调色 - 珊瑚橙（深色模式下更亮） */
-    --accent: 14 92% 70%;
-    --accent-foreground: 0 0% 100%;
-    
-    --destructive: 0 63% 40%;
-    --destructive-foreground: 0 0% 100%;
-    
-    --border: 217 33% 18%;
-    --input: 217 33% 18%;
-    --ring: 224 76% 65%;
   }
 }
