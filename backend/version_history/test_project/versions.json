@@ -1,0 +1,23 @@
+{
+  "versions": {
+    "v1_20260404_155222": {
+      "version_id": "v1_20260404_155222",
+      "content_type": "ppt",
+      "parent_version": null,
+      "created_at": "2026-04-04T15:52:22.087343",
+      "modification": "初始版本",
+      "metadata": {},
+      "file_path": "version_history\\test_project\\v1_20260404_155222.pptx"
+    },
+    "v2_20260404_155222": {
+      "version_id": "v2_20260404_155222",
+      "content_type": "ppt",
+      "parent_version": "v1_20260404_155222",
+      "created_at": "2026-04-04T15:52:22.092197",
+      "modification": "添加新页面，修改第二页",
+      "metadata": {},
+      "file_path": "version_history\\test_project\\v2_20260404_155222.pptx"
+    }
+  },
+  "current_version": "v1_20260404_155222"
+}

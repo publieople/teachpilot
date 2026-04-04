@@ -23,8 +23,9 @@ export function AnimatedCard({
         transition: { duration: 0.2 }
       }}
       className={cn(
-        "bg-white rounded-xl shadow-lg overflow-hidden",
-        "border border-gray-100",
+        "bg-white dark:bg-card rounded-xl shadow-lg overflow-hidden",
+        "border border-gray-200 dark:border-border",
+        "text-foreground",
         className
       )}
     >
