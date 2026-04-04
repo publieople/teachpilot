@@ -52,3 +52,7 @@ outputs/
 # Model caches
 .cache/
 models/
+
+# RAG
+chroma_db/
+backend/chroma_db/
