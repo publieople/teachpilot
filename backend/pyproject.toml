@@ -27,6 +27,7 @@ dependencies = [
     "python-pptx>=0.6.23",
     "opencv-python>=4.9.0.80",
     "pillow>=10.2.0",
+    "numpy>=2.0.0",
     
     # LLM API
     "openai>=1.12.0",
