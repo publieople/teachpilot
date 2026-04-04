@@ -12,6 +12,9 @@ export default defineConfig({
   },
   server: {
     port: 5173,
+    hmr: {
+      overlay: false, // 禁用错误覆盖层
+    },
     proxy: {
       '/api': {
         target: 'http://localhost:8000',
