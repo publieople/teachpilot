@@ -24,17 +24,59 @@ code {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: hsl(var(--muted));
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: hsl(var(--primary) / 0.5);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: hsl(var(--primary) / 0.7);
+}
+
+/* 创意背景效果 */
+.bg-gradient-mesh {
+  background-image: 
+    radial-gradient(at 40% 20%, hsl(var(--primary) / 0.15) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, hsl(var(--accent) / 0.1) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, hsl(var(--secondary) / 0.5) 0px, transparent 50%),
+    radial-gradient(at 80% 50%, hsl(var(--primary) / 0.1) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, hsl(var(--accent) / 0.05) 0px, transparent 50%);
+}
+
+.dark .bg-gradient-mesh {
+  background-image: 
+    radial-gradient(at 40% 20%, hsl(var(--primary) / 0.2) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, hsl(var(--accent) / 0.15) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, hsl(var(--secondary) / 0.3) 0px, transparent 50%),
+    radial-gradient(at 80% 50%, hsl(var(--primary) / 0.15) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, hsl(var(--accent) / 0.1) 0px, transparent 50%);
+}
+
+/* 噪点纹理 */
+.bg-noise {
+  position: relative;
+}
+
+.bg-noise::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 玻璃态效果 */
+.glass {
+  background: hsl(var(--card) / 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid hsl(var(--border) / 0.5);
 }
 
 @layer base {
@@ -45,50 +87,123 @@ code {
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
+    /* 添加微妙的背景动画 */
+    animation: bg-shift 30s ease infinite;
+    background-size: 200% 200%;
   }
 
+  @keyframes bg-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  /* 入场动画 */
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out forwards;
+  }
+
+  /* 悬浮动画 */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  /* 脉冲光晕 */
+  @keyframes glow {
+    0%, 100% {
+      box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+    }
+    50% {
+      box-shadow: 0 0 40px hsl(var(--primary) / 0.6);
+    }
+  }
+
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite;
+  }
+}
+
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* 浅色主题 - 专业现代 + 温暖亲和 */
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+    
+    /* 卡片 - 带微妙渐变 */
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 222 47% 11%;
+    
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
+    --popover-foreground: 222 47% 11%;
+    
+    /* 主色 - 深蓝色（专业感） */
+    --primary: 221 83% 53%;
     --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-    --radius: 0.5rem;
+    
+    /* 次要色 - 浅蓝灰 */
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 11%;
+    
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    
+    /* 强调色 - 珊瑚橙（创意/活力） */
+    --accent: 14 92% 63%;
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 221 83% 53%;
+    --radius: 0.75rem;
   }
 
   .dark {
-    --background: 222 47% 14%;
+    /* 深色主题 - 带氛围感 */
+    --background: 222 47% 11%;
     --foreground: 210 40% 98%;
-    --card: 222 47% 18%;
+    
+    --card: 222 47% 15%;
     --card-foreground: 210 40% 98%;
-    --popover: 222 47% 18%;
+    
+    --popover: 222 47% 15%;
     --popover-foreground: 210 40% 98%;
+    
+    /* 主色 - 亮蓝色 */
     --primary: 217 91% 65%;
     --primary-foreground: 222 47% 11%;
-    --secondary: 217 33% 22%;
+    
+    --secondary: 217 33% 18%;
     --secondary-foreground: 210 40% 98%;
-    --muted: 217 33% 22%;
-    --muted-foreground: 215 20% 70%;
-    --accent: 217 33% 22%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 63% 35%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217 33% 22%;
-    --input: 217 33% 22%;
-    --ring: 224 76% 55%;
+    
+    --muted: 217 33% 18%;
+    --muted-foreground: 215 20% 65%;
+    
+    /* 强调色 - 珊瑚橙（深色模式下更亮） */
+    --accent: 14 92% 70%;
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 0 63% 40%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 217 33% 18%;
+    --input: 217 33% 18%;
+    --ring: 224 76% 65%;
   }
 }
