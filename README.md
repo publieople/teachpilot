@@ -4,7 +4,7 @@
 
 <div align="center">
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-GPLv3-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.11+-green.svg)](https://www.python.org/downloads/)
 [![Node](https://img.shields.io/badge/node-18+-brightgreen.svg)](https://nodejs.org/)
 [![React](https://img.shields.io/badge/react-18-blue.svg)](https://react.dev/)
@@ -153,7 +153,14 @@ teachpilot/
 
 ## 📄 许可证
 
-MIT License
+GPL-3.0 License
+
+本项目采用 GNU General Public License v3.0 许可证。这意味着：
+- ✅ 你可以自由使用、修改和分发本软件
+- ✅ 任何衍生作品也必须采用 GPLv3 许可证
+- ❌ 不允许将本软件用于闭源商业产品
+
+详见 [LICENSE](LICENSE) 文件。
 
 ---
 

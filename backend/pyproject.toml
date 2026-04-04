@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "多模态 AI 互动式教学智能体后端服务"
 readme = "../README.md"
 requires-python = ">=3.11"
+license = { text = "GPL-3.0" }
 dependencies = [
     # Web Framework
     "fastapi>=0.109.0",
