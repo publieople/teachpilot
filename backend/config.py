@@ -30,6 +30,9 @@ class Settings(BaseSettings):
     # 上传文件配置
     UPLOAD_DIR: str = "./uploads"
     MAX_FILE_SIZE: int = 50 * 1024 * 1024  # 50MB
+    
+    # 输出文件配置
+    OUTPUT_DIR: str = "./outputs"
 
     class Config:
         env_file = ".env"
