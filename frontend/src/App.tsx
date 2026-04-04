@@ -85,9 +85,11 @@ function App() {
             
             <Dialog open={showSettings} onOpenChange={setShowSettings}>
               <DialogTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <Settings className="w-5 h-5" />
-                </Button>
+                <button>
+                  <Button variant="ghost" size="icon">
+                    <Settings className="w-5 h-5" />
+                  </Button>
+                </button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
