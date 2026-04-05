@@ -1,6 +1,7 @@
 import { ChatPage } from './pages/ChatPage';
 import { CoursewarePage } from './pages/CoursewarePage';
 import { KnowledgePage } from './pages/KnowledgePage';
+import { FilesPage } from './pages/FilesPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { useUIStore } from './stores/uiStore';
 import { Toaster } from 'sonner';
@@ -16,6 +17,8 @@ function App() {
         return <CoursewarePage />;
       case 'knowledge':
         return <KnowledgePage />;
+      case 'files':
+        return <FilesPage />;
       case 'settings':
         return <SettingsPage />;
       default:

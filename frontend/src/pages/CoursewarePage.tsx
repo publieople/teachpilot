@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { useCoursewareStore } from '@/stores/coursewareStore';
 import { getGeneratedFiles, downloadGeneratedFile } from '@/services/generate';
-import { FileText, Download, Eye, Clock } from 'lucide-react';
+import { FileText, Download, Eye, Clock, History } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { formatDateTime } from '@/lib/utils';
 import { toast } from 'sonner';
+import { CoursewarePreview } from '@/components/courseware/CoursewarePreview';
+import { VersionHistory } from '@/components/courseware/VersionHistory';
 
 export interface CoursewareItem {
   filename: string;
@@ -17,6 +19,9 @@ export interface CoursewareItem {
 export function CoursewarePage() {
   const { coursewares, setCoursewares } = useCoursewareStore();
   const [loading, setLoading] = useState(true);
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [versionHistoryOpen, setVersionHistoryOpen] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<CoursewareItem | null>(null);
 
   // 加载课件列表
   useEffect(() => {
@@ -69,8 +74,14 @@ export function CoursewarePage() {
     toast.success('开始下载');
   };
 
-  const handlePreview = () => {
-    toast.info('预览功能开发中');
+  const handlePreview = (item: CoursewareItem) => {
+    setSelectedFile(item);
+    setPreviewOpen(true);
+  };
+
+  const handleVersionHistory = (item: CoursewareItem) => {
+    setSelectedFile(item);
+    setVersionHistoryOpen(true);
   };
 
   return (
@@ -121,10 +132,19 @@ export function CoursewarePage() {
                     variant="outline"
                     size="sm"
                     className="flex-1"
-                    onClick={handlePreview}
+                    onClick={() => handlePreview(item)}
                   >
                     <Eye className="mr-1 h-3 w-3" />
                     预览
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex-1"
+                    onClick={() => handleVersionHistory(item)}
+                  >
+                    <History className="mr-1 h-3 w-3" />
+                    历史
                   </Button>
                   <Button
                     variant="default"
@@ -140,6 +160,28 @@ export function CoursewarePage() {
             ))}
           </div>
         )}
+
+        {/* 课件预览弹窗 */}
+        <CoursewarePreview
+          isOpen={previewOpen}
+          onClose={() => {
+            setPreviewOpen(false);
+            setSelectedFile(null);
+          }}
+          fileUrl={selectedFile ? downloadGeneratedFile(selectedFile.filename) : undefined}
+          filename={selectedFile?.filename}
+          fileType={selectedFile?.type}
+        />
+
+        {/* 版本历史弹窗 */}
+        <VersionHistory
+          isOpen={versionHistoryOpen}
+          onClose={() => {
+            setVersionHistoryOpen(false);
+            setSelectedFile(null);
+          }}
+          projectId="default"
+        />
       </div>
     </MainLayout>
   );

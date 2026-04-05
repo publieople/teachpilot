@@ -12,7 +12,7 @@ interface UIState {
   // 版本历史弹窗状态
   versionHistoryOpen: boolean;
   // 当前活动页面
-  activePage: 'chat' | 'courseware' | 'knowledge' | 'settings';
+  activePage: 'chat' | 'courseware' | 'knowledge' | 'files' | 'settings';
   
   // Actions
   setSidebarOpen: (open: boolean) => void;
@@ -21,7 +21,7 @@ interface UIState {
   setFileUploadOpen: (open: boolean) => void;
   setCoursewarePreviewOpen: (open: boolean) => void;
   setVersionHistoryOpen: (open: boolean) => void;
-  setActivePage: (page: 'chat' | 'courseware' | 'knowledge' | 'settings') => void;
+  setActivePage: (page: 'chat' | 'courseware' | 'knowledge' | 'files' | 'settings') => void;
 }
 
 export const useUIStore = create<UIState>((set) => ({

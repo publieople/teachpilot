@@ -68,14 +68,20 @@ export const getFileInfo = async (fileId: string): Promise<FileInfo> => {
  * 获取文件列表
  */
 export const getFiles = async (): Promise<{
-  files: Array<{
-    filename: string;
-    size: number;
-    created_at: string;
-  }>;
+  files: FileInfo[];
   total: number;
 }> => {
   return request('get', '/files/list');
+};
+
+/**
+ * 获取文件列表（别名）
+ */
+export const listFiles = async (): Promise<{
+  files: FileInfo[];
+  total: number;
+}> => {
+  return getFiles();
 };
 
 /**

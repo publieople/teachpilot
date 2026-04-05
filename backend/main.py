@@ -13,6 +13,7 @@ from config import settings
 
 # 导入路由模块
 from routes import chat, rag, files, generate, modify
+from routes import settings as settings_router
 
 # 创建 FastAPI 应用
 app = FastAPI(
@@ -43,6 +44,7 @@ app.include_router(rag.router)
 app.include_router(files.router)
 app.include_router(generate.router)
 app.include_router(modify.router)
+app.include_router(settings_router.router)
 
 
 @app.get("/")
@@ -73,9 +75,11 @@ async def api_status():
         "version": settings.VERSION,
         "modules": {
             "chat": "✅ 对话管理",
-            "rag": "🔧 知识库检索 (开发中)",
-            "files": "🔧 文件上传 (开发中)",
-            "generate": "🔧 课件生成 (开发中)"
+            "rag": "✅ 知识库检索",
+            "files": "✅ 文件上传",
+            "generate": "✅ 课件生成",
+            "modify": "✅ 修改意见理解",
+            "settings": "✅ 用户设置"
         },
         "config": {
             "model": settings.MODEL_ID,

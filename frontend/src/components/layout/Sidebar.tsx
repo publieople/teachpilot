@@ -5,6 +5,7 @@ import {
   FileText,
   BookOpen,
   Settings,
+  FolderOpen,
   Plus,
   X,
 } from 'lucide-react';
@@ -12,13 +13,13 @@ import { cn } from '@/lib/utils';
 
 interface SidebarProps {
   onNewChat?: () => void;
-  onNavigate?: (page: 'chat' | 'courseware' | 'knowledge' | 'settings') => void;
+  onNavigate?: (page: 'chat' | 'courseware' | 'knowledge' | 'files' | 'settings') => void;
 }
 
 export function Sidebar({ onNewChat, onNavigate }: SidebarProps) {
   const { sidebarOpen, setSidebarOpen, activePage, setActivePage } = useUIStore();
 
-  const handleNavigate = (page: 'chat' | 'courseware' | 'knowledge' | 'settings') => {
+  const handleNavigate = (page: 'chat' | 'courseware' | 'knowledge' | 'files' | 'settings') => {
     setActivePage(page);
     onNavigate?.(page);
     // 移动端自动关闭侧边栏
@@ -31,6 +32,7 @@ export function Sidebar({ onNewChat, onNavigate }: SidebarProps) {
     { id: 'chat' as const, icon: MessageSquare, label: '对话' },
     { id: 'courseware' as const, icon: FileText, label: '课件' },
     { id: 'knowledge' as const, icon: BookOpen, label: '知识库' },
+    { id: 'files' as const, icon: FolderOpen, label: '文件' },
     { id: 'settings' as const, icon: Settings, label: '设置' },
   ] as const;
 

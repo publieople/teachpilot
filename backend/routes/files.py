@@ -173,6 +173,29 @@ async def parse_file(
         raise HTTPException(status_code=500, detail=f"解析失败：{str(e)}")
 
 
+@router.get("/list")
+async def list_files():
+    """列出所有上传的文件"""
+    if not os.path.exists(settings.UPLOAD_DIR):
+        return {'files': [], 'total': 0}
+    
+    files = []
+    for filename in os.listdir(settings.UPLOAD_DIR):
+        file_path = os.path.join(settings.UPLOAD_DIR, filename)
+        if os.path.isfile(file_path):
+            stat = os.stat(file_path)
+            files.append({
+                'filename': filename,
+                'size': stat.st_size,
+                'created_at': datetime.fromtimestamp(stat.st_ctime).isoformat()
+            })
+    
+    return {
+        'files': files,
+        'total': len(files)
+    }
+
+
 @router.get("/{file_id}")
 async def get_file_info(file_id: str):
     """获取文件信息"""
@@ -201,29 +224,6 @@ async def download_file(file_id: str):
         filename=file_info['filename'],
         media_type='application/octet-stream'
     )
-
-
-@router.get("/list")
-async def list_files():
-    """列出所有上传的文件"""
-    if not os.path.exists(settings.UPLOAD_DIR):
-        return {'files': [], 'total': 0}
-    
-    files = []
-    for filename in os.listdir(settings.UPLOAD_DIR):
-        file_path = os.path.join(settings.UPLOAD_DIR, filename)
-        if os.path.isfile(file_path):
-            stat = os.stat(file_path)
-            files.append({
-                'filename': filename,
-                'size': stat.st_size,
-                'created_at': datetime.fromtimestamp(stat.st_ctime).isoformat()
-            })
-    
-    return {
-        'files': files,
-        'total': len(files)
-    }
 
 
 @router.delete("/{file_id}")
