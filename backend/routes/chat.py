@@ -391,7 +391,16 @@ async def stream_session_generator(
 
     assistant_content = ""
     buffer = ""
+    chunk_count = 0
+    total_bytes = 0
 
+    def debug_log(message: str):
+        """条件调试日志"""
+        if settings.ENABLE_STREAM_DEBUG:
+            print(f"[STREAM_DEBUG] {message}")
+    
+    debug_log(f"stream_session_generator 开始 - session_id={session_id}")
+    
     try:
         async with httpx.AsyncClient(timeout=120.0) as client:
             async with client.stream(
@@ -400,10 +409,17 @@ async def stream_session_generator(
                 headers=headers,
                 json=payload
             ) as response:
+                debug_log(f"LLM 响应状态码：{response.status_code}")
                 response.raise_for_status()
                 
                 async for chunk in response.aiter_bytes():
+                    chunk_count += 1
+                    total_bytes += len(chunk)
                     buffer += chunk.decode('utf-8')
+                    
+                    # 每 10 个 chunk 打印一次调试信息
+                    if chunk_count % 10 == 0:
+                        debug_log(f"已接收 {chunk_count} 个 chunks, 累计 {total_bytes} 字节，buffer 长度={len(buffer)}, 已累积内容长度={len(assistant_content)}")
                     
                     # 按 SSE 事件边界（双换行）分割
                     while '\n\n' in buffer:
@@ -420,11 +436,14 @@ async def stream_session_generator(
                                             content = parsed.get('choices', [{}])[0].get('delta', {}).get('content', '')
                                             if content:
                                                 assistant_content += content
-                            except:
+                            except Exception as e:
+                                debug_log(f"解析 event 时出错：{e}, event={event[:100]}...")
                                 pass
                                     
                 # 处理剩余数据
+                debug_log(f"流式传输结束，buffer 剩余长度={len(buffer)}, 已累积内容长度={len(assistant_content)}")
                 if buffer.strip():
+                    debug_log(f"处理剩余 buffer 数据")
                     yield buffer + '\n\n'
                     try:
                         for line in buffer.split('\n'):
@@ -435,18 +454,25 @@ async def stream_session_generator(
                                     content = parsed.get('choices', [{}])[0].get('delta', {}).get('content', '')
                                     if content:
                                         assistant_content += content
-                    except:
+                    except Exception as e:
+                        debug_log(f"解析剩余 buffer 时出错：{e}")
                         pass
                         
         # 保存完整的 AI 回复到数据库
+        debug_log(f"准备保存到数据库 - session_id={session_id}, content_length={len(assistant_content)}")
         db.add_message(
             session_id=session_id,
             role="assistant",
             content=assistant_content
         )
+        debug_log(f"已保存到数据库")
                     
     except httpx.HTTPError as e:
+        debug_log(f"HTTP 错误：{e}")
         yield f'data: {{"error": "{str(e)}"}}\n\n'
+    except Exception as e:
+        debug_log(f"未知错误：{e}")
+        yield f'data: {{"error": "未知错误：{str(e)}"}}\n\n'
 
 
 @router.post("/message", response_model=ChatResponse)

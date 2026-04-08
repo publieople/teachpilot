@@ -34,6 +34,9 @@ class Settings(BaseSettings):
     
     # 输出文件配置
     OUTPUT_DIR: str = "./outputs"
+    
+    # 调试日志开关
+    ENABLE_STREAM_DEBUG: bool = False
 
     class Config:
         env_file = ".env"

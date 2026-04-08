@@ -356,16 +356,18 @@ export const useSessionStore = create<SessionState>((set, get) => ({
     try {
       if (stream) {
         let accumulatedContent = '';
+        
         await streamSessionMessage(
           sessionId!,
           content,
           (chunk) => {
             accumulatedContent += chunk;
-            set((state) => ({
-              messages: state.messages.map((m) =>
+            set((state) => {
+              const newMessages = state.messages.map((m) =>
                 m.id === assistantMessageId ? { ...m, content: accumulatedContent } : m
-              ),
-            }));
+              );
+              return { messages: newMessages };
+            });
           },
           () => {
             set({ isSending: false });
