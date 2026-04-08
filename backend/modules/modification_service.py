@@ -14,8 +14,8 @@ class ModificationService:
     
     def __init__(self):
         """初始化服务"""
-        self.api_key = settings.OPENROUTER_API_KEY
-        self.base_url = settings.OPENROUTER_BASE_URL
+        self.api_key = settings.OPENAI_API_KEY
+        self.base_url = settings.OPENAI_BASE_URL
         self.model = settings.MODEL_ID
     
     async def understand_modification(
@@ -40,8 +40,6 @@ class ModificationService:
                 headers = {
                     "Authorization": f"Bearer {self.api_key}",
                     "Content-Type": "application/json",
-                    "HTTP-Referer": "https://github.com/Publieople/teachpilot",
-                    "X-Title": "TeachPilot"
                 }
                 
                 payload = {

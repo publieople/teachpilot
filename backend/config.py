@@ -16,10 +16,11 @@ class Settings(BaseSettings):
     HOST: str = "0.0.0.0"
     PORT: int = 8000
 
-    # OpenRouter API 配置
-    OPENROUTER_API_KEY: Optional[str] = None
-    OPENROUTER_BASE_URL: str = "https://openrouter.ai/api/v1"
-    MODEL_ID: str = "qwen/qwen3.6-plus:free"
+    # OpenAI 兼容 API 配置
+    # 支持任意 OpenAI 协议兼容的 API 服务
+    OPENAI_API_KEY: Optional[str] = None
+    OPENAI_BASE_URL: str = "https://api.openai.com/v1"  # 默认使用 OpenAI
+    MODEL_ID: str = "gpt-3.5-turbo"
 
     # ChromaDB 配置
     CHROMA_PERSIST_DIR: str = "./chroma_db"

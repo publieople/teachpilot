@@ -1,34 +1,30 @@
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ChatPage } from './pages/ChatPage';
 import { CoursewarePage } from './pages/CoursewarePage';
 import { KnowledgePage } from './pages/KnowledgePage';
 import { FilesPage } from './pages/FilesPage';
 import { SettingsPage } from './pages/SettingsPage';
-import { useUIStore } from './stores/uiStore';
 import { Toaster } from 'sonner';
 
 function App() {
-  const { activePage } = useUIStore();
-
-  const renderPage = () => {
-    switch (activePage) {
-      case 'chat':
-        return <ChatPage />;
-      case 'courseware':
-        return <CoursewarePage />;
-      case 'knowledge':
-        return <KnowledgePage />;
-      case 'files':
-        return <FilesPage />;
-      case 'settings':
-        return <SettingsPage />;
-      default:
-        return <ChatPage />;
-    }
-  };
-
   return (
-    <>
-      {renderPage()}
+    <BrowserRouter>
+      <Routes>
+        {/* 聊天页面 - 支持会话 ID 路由 */}
+        <Route path="/" element={<ChatPage />} />
+        <Route path="/chat" element={<ChatPage />} />
+        <Route path="/chat/:sessionId" element={<ChatPage />} />
+        
+        {/* 其他页面 */}
+        <Route path="/courseware" element={<CoursewarePage />} />
+        <Route path="/knowledge" element={<KnowledgePage />} />
+        <Route path="/files" element={<FilesPage />} />
+        <Route path="/settings" element={<SettingsPage />} />
+        
+        {/* 重定向 */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+      
       <Toaster
         position="top-right"
         duration={3000}
@@ -38,7 +34,7 @@ function App() {
           border: '1px solid hsl(var(--border))',
         }}
       />
-    </>
+    </BrowserRouter>
   );
 }
 

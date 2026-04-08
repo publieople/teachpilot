@@ -56,3 +56,21 @@ models/
 # RAG
 chroma_db/
 backend/chroma_db/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Uploads
+backend/uploads/
+uploads/
+
+# Version history (local cache)
+backend/version_history/
+version_history/
+
+# Test files
+backend/test_*.py
+backend/test_files/
+test/

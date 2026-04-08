@@ -71,7 +71,7 @@ export function ChatInput({
   return (
     <div className="w-full border-t bg-background p-4">
       <div className="mx-auto max-w-4xl">
-        <div className="flex items-end gap-2 rounded-lg border bg-card p-2 shadow-sm">
+        <div className="flex items-end gap-2 rounded-[28px] border bg-card p-2 shadow-sm">
           {/* 文件上传按钮 */}
           <div className="flex-shrink-0">
             <input
@@ -86,7 +86,7 @@ export function ChatInput({
               size="icon"
               onClick={() => document.getElementById('file-upload')?.click()}
               disabled={disabled}
-              className="h-10 w-10"
+              className="h-10 w-10 rounded-full"
             >
               <Paperclip className="h-5 w-5" />
             </Button>
@@ -117,7 +117,7 @@ export function ChatInput({
               onClick={handleVoiceClick}
               disabled={disabled}
               className={cn(
-                'h-10 w-10',
+                'h-10 w-10 rounded-full',
                 isRecording && 'text-red-500 hover:text-red-600'
               )}
             >
@@ -135,7 +135,7 @@ export function ChatInput({
               onClick={handleSubmit}
               disabled={disabled || !message.trim() || isComposing}
               size="icon"
-              className="h-10 w-10"
+              className="h-10 w-10 rounded-full"
             >
               <Send className="h-5 w-5" />
             </Button>
