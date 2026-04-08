@@ -8,3 +8,4 @@ export * from './generate';
 export * from './modify';
 export * from './rag';
 export * from './settings';
+export * from './tts';

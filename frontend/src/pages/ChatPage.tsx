@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { MessageList } from '@/components/chat/MessageList';
@@ -27,7 +27,6 @@ export function ChatPage() {
   } = useSessionStore();
   
   const { setIsUploading, setUploadProgress } = useFileStore();
-  const [isRecording, setIsRecording] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
 
   // 从 URL 同步会话
@@ -88,17 +87,6 @@ export function ChatPage() {
     }
   }, [ensureSession, handleSend, setIsUploading, setUploadProgress]);
 
-  // 处理语音录制
-  const handleVoiceStart = useCallback(() => {
-    setIsRecording(true);
-    toast.info('语音录制中，请说话...');
-  }, []);
-
-  const handleVoiceStop = useCallback(() => {
-    setIsRecording(false);
-    toast.info('语音录制结束');
-  }, []);
-
   // 处理新建会话
   const handleNewChat = useCallback(() => {
     clearCurrentSession();
@@ -149,9 +137,6 @@ export function ChatPage() {
         <ChatInput
           onSend={handleSend}
           onFileUpload={handleFileUpload}
-          onVoiceStart={handleVoiceStart}
-          onVoiceStop={handleVoiceStop}
-          isRecording={isRecording}
           disabled={isSending}
           placeholder="描述您的教学设计想法，例如：我想设计一节关于 Python 基础语法的课程..."
         />

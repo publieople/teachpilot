@@ -1,7 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/Button';
 import { Send, Paperclip, Mic, Square } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useSpeechRecognition, isSpeechRecognitionSupported } from '@/hooks/useSpeechRecognition';
 
 interface ChatInputProps {
   onSend: (message: string) => void;
@@ -25,6 +26,29 @@ export function ChatInput({
   const [message, setMessage] = useState('');
   const [isComposing, setIsComposing] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  
+  // 语音识别 Hook
+  const {
+    isListening,
+    transcript,
+    error: speechError,
+    isSupported: isSpeechSupported,
+    startListening,
+    stopListening,
+  } = useSpeechRecognition({
+    lang: 'zh-CN',
+    continuous: false,
+    interimResults: true,
+    onResult: (text, isFinal) => {
+      setMessage(text);
+    },
+    onEnd: () => {
+      onVoiceStop?.();
+    },
+    onStart: () => {
+      onVoiceStart?.();
+    },
+  });
 
   // 自动调整文本框高度
   useEffect(() => {
@@ -34,14 +58,26 @@ export function ChatInput({
     }
   }, [message]);
 
-  const handleSubmit = () => {
-    if (message.trim() && !disabled && !isComposing) {
-      onSend(message.trim());
+  // 监听语音识别结果
+  useEffect(() => {
+    if (transcript && !isListening) {
+      setMessage(transcript);
+    }
+  }, [transcript, isListening]);
+
+  const handleSendClick = useCallback((text?: string) => {
+    const content = text ?? message;
+    if (content.trim() && !disabled && !isComposing) {
+      onSend(content.trim());
       setMessage('');
       if (textareaRef.current) {
         textareaRef.current.style.height = 'auto';
       }
     }
+  }, [message, disabled, isComposing, onSend]);
+
+  const handleSubmit = () => {
+    handleSendClick();
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -61,10 +97,15 @@ export function ChatInput({
   };
 
   const handleVoiceClick = () => {
-    if (isRecording) {
-      onVoiceStop?.();
+    if (!isSpeechSupported) {
+      alert('您的浏览器不支持语音识别功能，请使用 Chrome 或 Edge 浏览器');
+      return;
+    }
+    
+    if (isListening) {
+      stopListening();
     } else {
-      onVoiceStart?.();
+      startListening();
     }
   };
 
@@ -115,13 +156,14 @@ export function ChatInput({
               variant="ghost"
               size="icon"
               onClick={handleVoiceClick}
-              disabled={disabled}
+              disabled={disabled || !isSpeechSupported}
               className={cn(
                 'h-10 w-10 rounded-full',
-                isRecording && 'text-red-500 hover:text-red-600'
+                isListening && 'text-red-500 hover:text-red-600 animate-pulse'
               )}
+              title={!isSpeechSupported ? '您的浏览器不支持语音识别' : '语音输入'}
             >
-              {isRecording ? (
+              {isListening ? (
                 <Square className="h-5 w-5" />
               ) : (
                 <Mic className="h-5 w-5" />
